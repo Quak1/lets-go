@@ -1,12 +1,15 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"net/http"
 )
 
 func main() {
 	const PORT = ":4000"
+	addr := flag.String("addr", ":4000", "HTTP network address")
+	flag.Parse()
 
 	mux := http.NewServeMux()
 
@@ -18,7 +21,7 @@ func main() {
 	mux.HandleFunc("GET /snippet/create", snippetCreate)
 	mux.HandleFunc("POST /snippet/create", snippetCreatePost)
 
-	log.Println("Starting server on", PORT)
+	log.Println("Starting server on", *addr)
 
-	log.Fatal(http.ListenAndServe(PORT, mux))
+	log.Fatal(http.ListenAndServe(*addr, mux))
 }
