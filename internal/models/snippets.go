@@ -1,0 +1,57 @@
+package models
+
+import (
+	"database/sql"
+	"errors"
+	"time"
+)
+
+type Snippet struct {
+	ID        string
+	Title     string
+	Content   string
+	CreatedAt time.Time
+	Expires   time.Time
+}
+
+type SnippetModel struct {
+	DB *sql.DB
+}
+
+func (m *SnippetModel) Insert(title, content string, expires int) (int, error) {
+	stmt := `INSERT INTO snippets (title, content, created, expires)
+	VALUES(?, ?, UTC_TIMESTAMP(), DATE_ADD(UTC_TIMESTAMP(), INTERVAL ? DAY));`
+
+	res, err := m.DB.Exec(stmt, title, content, expires)
+	if err != nil {
+		return 0, err
+	}
+
+	id, err := res.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return int(id), nil
+}
+
+func (m *SnippetModel) Get(id int) (Snippet, error) {
+	stmt := `SELECT id, title, content, created, expires FROM snippets
+	WHERE expires > UTC_TIMESTAMP() AND id = ?`
+
+	row := m.DB.QueryRow(stmt, id)
+
+	s := Snippet{}
+	if err := row.Scan(&s.ID, &s.Title, &s.Content, &s.CreatedAt, &s.Expires); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return Snippet{}, ErrNoRecord
+		}
+		return Snippet{}, nil
+	}
+
+	return s, nil
+}
+
+func (m *SnippetModel) Latest() ([]Snippet, error) {
+	return nil, nil
+}
