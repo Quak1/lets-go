@@ -31,6 +31,16 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (app *application) latestSnippets(w http.ResponseWriter, r *http.Request) {
+	snippets, err := app.snippets.Latest()
+	if err != nil {
+		app.serverError(w, r, err)
+		return
+	}
+
+	fmt.Fprintf(w, "%+v", snippets)
+}
+
 func (app *application) snippetView(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(r.PathValue("id"))
 	if err != nil || id < 1 {
