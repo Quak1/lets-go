@@ -26,6 +26,7 @@ func (app *application) routes() http.Handler {
 
 	protectedChain := dynamicChain.Append(app.requireAuthentication)
 
+	mux.Handle("GET /account/view", protectedChain.ThenFunc(app.accountView))
 	mux.Handle("GET /snippet/create", protectedChain.ThenFunc(app.snippetCreate))
 	mux.Handle("POST /snippet/create", protectedChain.ThenFunc(app.snippetCreatePost))
 	mux.Handle("POST /user/logout", protectedChain.ThenFunc(app.userLogoutPost))

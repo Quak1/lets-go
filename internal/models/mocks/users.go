@@ -1,6 +1,8 @@
 package mocks
 
 import (
+	"time"
+
 	"github.com/Quak1/snippetbox/internal/models"
 )
 
@@ -29,5 +31,19 @@ func (m *UserModel) Exists(id int) (bool, error) {
 		return true, nil
 	default:
 		return false, nil
+	}
+}
+
+func (m *UserModel) Get(id int) (models.User, error) {
+	switch id {
+	case 1:
+		return models.User{
+			ID:      1,
+			Name:    "Alice",
+			Email:   "alice@example.com",
+			Created: time.Now(),
+		}, nil
+	default:
+		return models.User{}, nil
 	}
 }
