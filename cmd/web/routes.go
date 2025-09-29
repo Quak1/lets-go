@@ -17,6 +17,7 @@ func (app *application) routes() http.Handler {
 	dynamicChain := alice.New(app.sessionManager.LoadAndSave, app.noSurf, app.authenticate)
 
 	mux.Handle("GET /{$}", dynamicChain.ThenFunc(app.home))
+	mux.Handle("GET /about", dynamicChain.ThenFunc(app.aboutGet))
 	mux.Handle("GET /snippet/view/{id}", dynamicChain.ThenFunc(app.snippetView))
 	mux.Handle("GET /user/signup", dynamicChain.ThenFunc(app.userSignup))
 	mux.Handle("POST /user/signup", dynamicChain.ThenFunc(app.userSignupPost))
