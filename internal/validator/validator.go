@@ -61,3 +61,7 @@ var EmailRX = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](
 func IsEmail(value string) bool {
 	return Matches(value, EmailRX)
 }
+
+func AreEqual[T comparable](v1, v2 T) bool {
+	return v1 == v2
+}
