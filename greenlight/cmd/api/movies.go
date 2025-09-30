@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/Quak1/lets-go/greenlight/internal/data"
+	"github.com/Quak1/lets-go/greenlight/internal/validator"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -19,6 +20,20 @@ func (app *application) createMovieHandler(w http.ResponseWriter, r *http.Reques
 	err := app.readJSON(w, r, &input)
 	if err != nil {
 		app.errorResponse(w, r, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	movie := &data.Movie{
+		Title:   input.Title,
+		Year:    input.Year,
+		Runtime: input.Runtime,
+		Genres:  input.Genres,
+	}
+
+	v := validator.New()
+
+	if data.ValidateMovie(v, movie); !v.Valid() {
+		app.failedValidationResponse(w, r, v.Errors)
 		return
 	}
 
