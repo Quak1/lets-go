@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/Quak1/snippetbox/ui"
+	"github.com/Quak1/lets-go/snippetbox/ui"
 	"github.com/justinas/alice"
 )
 

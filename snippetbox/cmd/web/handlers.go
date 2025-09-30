@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/Quak1/snippetbox/internal/models"
-	"github.com/Quak1/snippetbox/internal/validator"
+	"github.com/Quak1/lets-go/snippetbox/internal/models"
+	"github.com/Quak1/lets-go/snippetbox/internal/validator"
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {

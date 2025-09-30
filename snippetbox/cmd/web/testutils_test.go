@@ -14,7 +14,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Quak1/snippetbox/internal/models/mocks"
+	"github.com/Quak1/lets-go/snippetbox/internal/models/mocks"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-playground/form/v4"
 )

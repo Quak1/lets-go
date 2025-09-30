@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/Quak1/snippetbox/internal/assert"
+	"github.com/Quak1/lets-go/snippetbox/internal/assert"
 )
 
 func TestCommonHeaders(t *testing.T) {

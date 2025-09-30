@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/Quak1/snippetbox/internal/models"
-	"github.com/Quak1/snippetbox/ui"
+	"github.com/Quak1/lets-go/snippetbox/internal/models"
+	"github.com/Quak1/lets-go/snippetbox/ui"
 )
 
 type templateData struct {

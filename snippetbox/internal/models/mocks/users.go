@@ -3,7 +3,7 @@ package mocks
 import (
 	"time"
 
-	"github.com/Quak1/snippetbox/internal/models"
+	"github.com/Quak1/lets-go/snippetbox/internal/models"
 )
 
 type UserModel struct{}

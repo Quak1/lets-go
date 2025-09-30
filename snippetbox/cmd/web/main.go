@@ -10,7 +10,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/Quak1/snippetbox/internal/models"
+	"github.com/Quak1/lets-go/snippetbox/internal/models"
 	"github.com/alexedwards/scs/mysqlstore"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-playground/form/v4"

@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/Quak1/snippetbox/internal/assert"
+	"github.com/Quak1/lets-go/snippetbox/internal/assert"
 )
 
 func TestPing(t *testing.T) {
