@@ -20,5 +20,5 @@ func (app *application) routes() http.Handler {
 	router.PATCH("/v1/movies/:id", app.updateMovieHandler)
 	router.DELETE("/v1/movies/:id", app.deleteMovieHandler)
 
-	return app.recoverPanic(router)
+	return app.recoverPanic(app.rateLimit(router))
 }
