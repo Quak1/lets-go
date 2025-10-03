@@ -21,6 +21,7 @@ func (app *application) routes() http.Handler {
 	router.DELETE("/v1/movies/:id", app.deleteMovieHandler)
 
 	router.POST("/v1/users", app.registerUserHandler)
+	router.PUT("/v1/users/activated", app.activateUserHandler)
 
 	return app.recoverPanic(app.rateLimit(router))
 }
