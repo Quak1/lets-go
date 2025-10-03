@@ -14,11 +14,11 @@ func (app *application) routes() http.Handler {
 
 	router.GET("/v1/healthcheck", app.healthcheckHandler)
 
-	router.GET("/v1/movies", app.requireActivatedUser(app.listMoviesHandler))
-	router.POST("/v1/movies", app.requireActivatedUser(app.createMovieHandler))
-	router.GET("/v1/movies/:id", app.requireActivatedUser(app.showMovieHandler))
-	router.PATCH("/v1/movies/:id", app.requireActivatedUser(app.updateMovieHandler))
-	router.DELETE("/v1/movies/:id", app.requireActivatedUser(app.deleteMovieHandler))
+	router.GET("/v1/movies", app.requirePermission("movies:read", app.listMoviesHandler))
+	router.POST("/v1/movies", app.requirePermission("movies:write", app.createMovieHandler))
+	router.GET("/v1/movies/:id", app.requirePermission("movies:read", app.showMovieHandler))
+	router.PATCH("/v1/movies/:id", app.requirePermission("movies:write", app.updateMovieHandler))
+	router.DELETE("/v1/movies/:id", app.requirePermission("movies:write", app.deleteMovieHandler))
 
 	router.POST("/v1/users", app.registerUserHandler)
 	router.PUT("/v1/users/activated", app.activateUserHandler)
