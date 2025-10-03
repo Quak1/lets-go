@@ -36,6 +36,18 @@ type password struct {
 	hash      []byte
 }
 
+func (p *password) Set(plaintextPassword string) error {
+	hash, err := bcrypt.GenerateFromPassword([]byte(plaintextPassword), 12)
+	if err != nil {
+		return err
+	}
+
+	p.hash = hash
+	p.plaintext = &plaintextPassword
+
+	return nil
+}
+
 func (p *password) SetHash() error {
 	hash, err := bcrypt.GenerateFromPassword([]byte(*p.plaintext), 12)
 	if err != nil {

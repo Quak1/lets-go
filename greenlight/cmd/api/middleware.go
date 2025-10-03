@@ -11,6 +11,7 @@ import (
 
 	"github.com/Quak1/lets-go/greenlight/internal/data"
 	"github.com/Quak1/lets-go/greenlight/internal/validator"
+	"github.com/julienschmidt/httprouter"
 	"golang.org/x/time/rate"
 )
 
@@ -123,4 +124,32 @@ func (app *application) authenticate(next http.Handler) http.Handler {
 
 		next.ServeHTTP(w, r)
 	})
+}
+
+func (app *application) requireAuthenticatedUser(next httprouter.Handle) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		user := app.contextGetUser(r)
+
+		if user.IsAnonymous() {
+			app.authenticationRequiredResponse(w, r)
+			return
+		}
+
+		next(w, r, ps)
+	}
+}
+
+func (app *application) requireActivatedUser(next httprouter.Handle) httprouter.Handle {
+	f := func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		user := app.contextGetUser(r)
+
+		if !user.Activated {
+			app.inactiveAccountResponse(w, r)
+			return
+		}
+
+		next(w, r, ps)
+	}
+
+	return app.requireAuthenticatedUser(f)
 }
